@@ -22,4 +22,5 @@ def main():
             print("\nConexão encerrada.")
 
 if__name__ == "__main__":
+    main()
     
