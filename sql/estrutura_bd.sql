@@ -83,6 +83,54 @@ CREATE TABLE Emprestimo(
 );
 
 -- Tabela Reserva
+CREATE TABLE Reserva (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    aluno_id INT,
+    livro_id INT,
+    data_reserva DATE,
+    status ENUM('ativa', 'expirada', 'cancelada'),
+    FOREIGN KEY (aluno_id) REFERENCES Aluno(id),
+    FOREIGN KEY (livro_id) REFERENCES Livro(id)
+);
+
+-- Tabela Historicoleitura
+CREATE TABLE Historicoleitura(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    aluno_id INT,
+    livro_id INT,
+    data_inicio DATE,
+    data_fim DATE,
+    FOREIGN KEY (aluno_id) REFERENCES Aluno(id)
+    FOREIGN KEY (livro_id) REFERENCES Livro(id)
+);
+
+-- Tabela Sugestao
+CREATE TABLE Sugestao(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    titulo VARCHAR(150),
+    autor VARCHAR(100),
+    categoria VARCHAR(50),
+    justificativa TEXT,
+    data_sugestao DATE,
+    aluno_id INT,
+    professor_id INT,
+    FOREIGN KEY (aluno_id) REFERENCES Aluno(id),
+    FOREIGN KEY (professor_id) REFERENCES professor(id)
+);
+
+-- Tabela Relatorio
+CREATE TABLE Relatorio(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    tipo ENUM('mensal', 'turma', 'aluno', 'livros'),
+    periodo_inicio DATE,
+    periodo_fim DATE,
+    gerador_por_bibliotecario INT,
+    gerador_por_diretor INT,
+    gerador_por_supervisor INT,
+    FOREIGN KEY (gerador_por_bibliotecario) REFERENCES Bibliotecario(id),
+    FOREIGN KEY (gerador_por_diretor) REFERENCES Diretor(id),
+    FOREIGN KEY (gerador_por_supervisor) REFERENCES Supervisor(id),
+);
 
     
     
