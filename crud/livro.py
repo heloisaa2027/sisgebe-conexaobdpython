@@ -34,4 +34,30 @@ def listar_livros():
 
 def obter_livro(id_livro):
     try:
-        conn = conectar()                    
+        conn = conectar()
+        cursor = conn.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM Livro WHERE id=%s", (id_livro))
+        row = cursor.fetchone()
+        if not row:
+            return {"status":"aviso","mensagem":"Livro não encontrado."}
+        return row
+    except Exception as e:
+        return {"status":"erro","mensagem":str(e)}
+    finally:
+        try: conn.close()
+        except: pass
+
+def atualizar_Livro(id_livro, titulo, autor, isbn, sinopse, capa, quantidade, categoria_id):
+    try:
+        conn = conectar()
+        cursor = conn.cursor()
+        cursor.execute(
+            "UPDATE Livro SET titulo=%s, autor=%s, isbn=%s, sinopse=%s, capa=%s, quantidade=%s, categoria_id=%s WHERE id=%s",
+            (titulo, autor, isbn, capa, quantidade, categoria_id, id_livro)
+        )
+        conn.commit()
+        if cursor.rowcount==0:
+            return {"status":"aviso","mensagem":"Nenhum livro encontrado para atualizar."}
+        return {"status":}    
+
+
