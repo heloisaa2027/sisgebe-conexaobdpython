@@ -10,9 +10,11 @@ def criar_supervisor(nome,email,senha,status='ativo'):
         conn.commit(); return {"status":"sucesso","mensagem":"Supervisor criado.","id":cursor.lastrowid}
     except Exception as e: return {"status":"erro","mensagem":str(e)}
     finally:
-        try: conn.close()
-        except: pass
-
+        if conn is not None:
+            try:
+                conn.close()
+            except Exception as e:
+                    print(f"Erro ao fechar conexão: {e}")
 def listar_supervisores():
     try:
         conn=conectar(); cursor=conn.cursor(dictionary=True)
@@ -20,8 +22,11 @@ def listar_supervisores():
         return cursor.fetchall()
     except Exception as e: return {"status":"erro","mensagem":str(e)}
     finally:
-        try: conn.close()
-        except: pass
+        if conn is not None:
+            try:
+                conn.close()
+            except Exception as e:
+                    print(f"Erro ao fechar conexão: {e}")
 
 def atualizar_supervisor(id_s,nome=None,email=None,senha=None,status=None):
     try:
@@ -39,8 +44,11 @@ def atualizar_supervisor(id_s,nome=None,email=None,senha=None,status=None):
         return {"status":"sucesso","mensagem":"Supervisor atualizado."}
     except Exception as e: return {"status":"erro","mensagem":str(e)}
     finally:
-        try: conn.close()
-        except: pass
+        if conn is not None:
+            try:
+                conn.close()
+            except Exception as e:
+                    print(f"Erro ao fechar conexão: {e}")
 
 def deletar_supervisor(id_s):
     try:
@@ -51,5 +59,8 @@ def deletar_supervisor(id_s):
         return {"status":"sucesso","mensagem":"Supervisor excluído."}
     except Exception as e: return {"status":"erro","mensagem":str(e)}
     finally:
-        try: conn.close()
-        except: pass
+        if conn is not None:
+            try:
+                conn.close()
+            except Exception as e:
+                    print(f"Erro ao fechar conexão: {e}")

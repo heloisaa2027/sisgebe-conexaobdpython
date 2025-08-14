@@ -1,4 +1,4 @@
-- Criação do banco de dados para gerenciar uma biblioteca escolar - SGB
+-- Criação do banco de dados para gerenciar uma biblioteca escolar - SGB
 CREATE DATABASE IF NOT EXISTS SGB;
 USE SGB;
 

@@ -10,7 +10,11 @@ def criar_categoria(nome, decricao):
     except Exception as e:
         return{"status":"erro","mensagem":str(e)}
     finally:
-        conn.close()
+        if conn is not None:
+            try:
+                conn.close()
+            except Exception as e:
+                    print(f"Erro ao fechar conexão: {e}")
 
 
 def listar_categorias():
@@ -22,7 +26,11 @@ def listar_categorias():
     except Exception as e:
         return{"status":"erro","mensagem":str(e)}
     finally:    
-        conn.close()
+        if conn is not None:
+            try:
+                conn.close()
+            except Exception as e:
+                    print(f"Erro ao fechar conexão: {e}")
         
 def atualizar_categoria(id_categoria, novo_nome, nova_desscricao):
     try:
@@ -37,18 +45,27 @@ def atualizar_categoria(id_categoria, novo_nome, nova_desscricao):
     except Exception as e:
         return{"status":"erro","mensagem":str(e)}
     finally:
-        conn.close()
-    def deletar_categoria(id_categori):
-        try:
-            conn = conectar()
-            cursor = conn.cursor()
-            cursor.execute("DELETE FROM Categoria is WHERE id=%s", (id_categoria,))
-            conn.commit()
-            if cursor.rowcount == 0:
-                return{"status":"aviso","mensagem":"Nenhuma categoria encontrada para deletar."}
-            return{"status":"sucesso","mensagem":"Categoria excluida!"}
-        except Exception as e:
-            return{"status":"erro","mensagem":str(e)}
-        finally:        
-            conn.close()
+        if conn is not None:
+            try:
+                conn.close()
+            except Exception as e:
+                    print(f"Erro ao fechar conexão: {e}")
+
+def deletar_categoria(id_categori):
+    try:
+        conn = conectar()
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM Categoria is WHERE id=%s", (id_categoria,))
+        conn.commit()
+        if cursor.rowcount == 0:
+            return{"status":"aviso","mensagem":"Nenhuma categoria encontrada para deletar."}
+        return{"status":"sucesso","mensagem":"Categoria excluida!"}
+    except Exception as e:
+        return{"status":"erro","mensagem":str(e)}
+    finally:        
+        if conn is not None:
+            try:
+                conn.close()
+            except Exception as e:
+                    print(f"Erro ao fechar conexão: {e}")
       
