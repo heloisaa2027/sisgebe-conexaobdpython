@@ -1,31 +1,37 @@
 {% extends "base.html" %}
-{% block conteudo %}
-<h1>Alunos</h1>
-<form method="post" action="/alunos/adicionar">
-    <div class="mb-3">
-        <label>Nome</label>
-        <input type="text" name="nome" class="form-control" required>
-    </div>
-    <div class="mb-3">
-        <label>Email</label>
-        <input type="email" name="email" class="form-control">
-    </div>
-    <button type="submit" class="btn btn-primary">Adicionar</button>
-</form>
-<hr>
-<table class="table table-striped">
-    <thead><tr><th>ID</th><th>Nome</th><th>Email</th><th>Ações</th></tr></thead>
-    <tbody>
-        {% for aluno in alunos %}
-        <tr>
-            <td>{{ aluno.id }}</td>
-            <td>{{ aluno.nome }}</td>
-            <td>{{ aluno.email }}</td>
-            <td>
-                <a href="/alunos/deletar/{{ aluno.id }}" class="btn btn-danger btn-sm">Excluir</a>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Gerenciar Alunos</h1>
+    <a href="{{ url_for('novo_aluno') }}" class="btn btn-primary mb-3">Novo Aluno</a>
+
+    {% if alunos %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for aluno in alunos %}
+            <tr>
+                <td>{{ aluno.id }}</td>
+                <td>{{ aluno.nome }}</td>
+                <td>{{ aluno.email }}</td>
+                <td>
+                    <a href="{{ url_for('editar_aluno', id=aluno.id) }}" class="btn btn-sm btn-warning">Editar</a>
+                    <a href="{{ url_for('deletar_aluno', id=aluno.id) }}" class="btn btn-sm btn-danger">Excluir</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div class="alert alert-info">Nenhum aluno cadastrado.</div>
+    {% endif %}
+</div>
 {% endblock %}
+
