@@ -1,15 +1,14 @@
-# db_config.py
-
 import os
-from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask import Flask
+
+# Caminho absoluto do arquivo do banco
+BASE_DIR = os.path.abspath(os.path.dirname(_file_))
+DB_PATH = os.path.join(BASE_DIR, "sgb.db")
 
 db = SQLAlchemy()
 
-# banco ficará no arquivo sgb.db na raiz do projeto
-DB_PATH = os.path.join(os.path.dirname(_file_), "sgb.db")
-
-def init_app(app: Flask) -> Flask:
+def init_app(app: Flask):
     app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{DB_PATH}"
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.init_app(app)
